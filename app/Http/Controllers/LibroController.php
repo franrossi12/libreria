@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\libro;
 use Illuminate\Http\Request;
 
+use DB;
+use App\Quotation;
+
 class LibroController extends Controller
 {
     public function index()
@@ -29,6 +32,18 @@ class LibroController extends Controller
     {
         $libro = libro::find($id);
         return view('mostrar', ['libro' => $libro]);
+    }
+
+    public function buscar(Request $request)
+    {
+        $nombre = $request->get('name');
+        $libro = libro::where('nombre','=',$nombre)->first();
+        if (!empty($libro)) {
+            return view ('mostrar',['libro' => $libro]);
+        }else{
+            return view('mostrar')        ;
+        }
+
     }
 
 

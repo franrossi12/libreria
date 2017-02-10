@@ -13,4 +13,9 @@ class libro extends Model
         'stock',
 
     ];
+
+    public function scopeNombre($query,$name)
+    {
+        $query->where('nombre', $name);
+    }
 }

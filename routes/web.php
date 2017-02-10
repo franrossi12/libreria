@@ -11,14 +11,15 @@
 |
 */
 
+Route::auth('login');
 Route::get('/', 'LibroController@index');
 Route::get('/nuevo', 'LibroController@crear');
+Route::Get('/mostrar', 'LibroController@buscar');
 Route::post('/nuevo', 'LibroController@store');
 //Route::get('mostrar/{id}', 'LibroController@show');
 Route::get('/mostrar/{id}', [
     'as' => 'mostrar',
     'uses' => 'LibroController@show',
 ]);
-Auth::routes();
 
 Route::get('/home', 'HomeController@index');
