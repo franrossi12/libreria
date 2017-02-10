@@ -12,7 +12,7 @@
                 <span class="input-group-addon" id="basic-addon1"></span>
                 <input name="autor" type="text" class="form-control" placeholder="Autor" aria-describedby="basic-addon1">
             </div>
-            <hr>
+            <hr>    
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1"></span>
                 <input name="precio" type="text" class="form-control" placeholder="Precio" aria-describedby="basic-addon1">
