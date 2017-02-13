@@ -1,9 +1,9 @@
 @extends('layouts.app')
-
 @section('content')
     {!! Form::open(['url' => 'mostrar', 'method' => 'GET', 'class' => 'navbar-form navbar-left', 'role' => 'search']) !!}
         <div class="form-group">
-            {!! Form::text('name', null ,['class' => 'form-control' , 'placeholder' => 'Libro']) !!}
+            {!! Form::text('name', null ,['id'=> 'libro', 'class' => 'form-control' , 'placeholder' => 'Libro', 'autocomplete' => 'off']) !!}
+            <div id="busqueda" hidden="true" style="background-color: #9d9d9d"></div>
         </div>
         <button type="submit" class="btn btn-default">Buscar</button>
     {!! Form::close() !!}
@@ -42,6 +42,47 @@
         </div>
         @endforeach
     </div>
+    <script>
 
-    <!-- /.row -->
+        $(document).ready(function(){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            });
+
+
+            var busqueda;
+            var url_Base = '{{  route('buscar') }}';
+            $("#libro").focus();
+            $("#libro").keyup(function(){
+                $("#busqueda").attr("hidden",false);
+                //$("#busqueda").html("<p>asdasd</p>");
+                //obtenemos el texto introducido en el campo de búsqueda
+                busqueda = $("#libro").val();
+                //hace la búsqueda
+                $.ajax({
+                    type: "POST",
+                    url: url_Base,
+                    data: {
+                        "libro": busqueda
+                    },
+                    dataType: "JSON",
+                    beforeSend: function () {
+                        $("#busqueda").html("...");
+                    }
+                }).done(function(data) {
+                    debugger;
+                    alert ("succces");
+                    $("#busqueda").val(data);
+                }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                })
+
+            });
+
+        });
+    </script>
 @endsection
+

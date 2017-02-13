@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\libro;
 use Illuminate\Http\Request;
 
-use DB;
 use App\Quotation;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 
 class LibroController extends Controller
 {
@@ -24,7 +26,6 @@ class LibroController extends Controller
     public function store()
     {
 
-
         libro::create(request()->all());
         return redirect()->to('/');
     }
@@ -34,17 +35,12 @@ class LibroController extends Controller
         return view('mostrar', ['libro' => $libro]);
     }
 
-    public function buscar(Request $request)
+    public function buscar()
     {
-        $nombre = $request->get('name');
-        $libro = libro::where('nombre','=',$nombre)->first();
-        if (!empty($libro)) {
-            return view ('mostrar',['libro' => $libro]);
-        }else{
-            return view('mostrar')        ;
-        }
+        $dato = Input::get('libro');
+        $libros = DB::table('libros')->where('nombre', 'like', "%{$dato}%")->get();
+        return json_encode($libros);
 
     }
-
 
 }
