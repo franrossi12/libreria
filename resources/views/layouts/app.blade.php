@@ -22,6 +22,11 @@
     {{--{{ Html::script("js/bootstrap.js") }}--}}
     {{ Html::script("js/bootstrap.min.js")}}
     {{ Html::script("js/app.js")}}
+    {{ Html::script("js/autocomplete.js")}}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -67,7 +72,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{url('/')}}">Start Bootstrap</a>
+                    <a class="navbar-brand" href="{{url('/')}}">Libreria</a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

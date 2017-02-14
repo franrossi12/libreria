@@ -35,11 +35,19 @@ class LibroController extends Controller
         return view('mostrar', ['libro' => $libro]);
     }
 
-    public function buscar()
+    public function buscar(Request $request)
     {
-        $dato = Input::get('libro');
+        $dato = $request->get('b');
         $libros = DB::table('libros')->where('nombre', 'like', "%{$dato}%")->get();
-        return json_encode($libros);
+        if(!empty($libros)) {
+            echo "<ul style='list-style: none'>";
+            foreach ($libros as $libro) {
+
+                echo "<li onClick='selectLibro({$libro->id})'>{$libro->nombre}</li>";
+
+            };
+            echo "</ul>";
+        }
 
     }
 

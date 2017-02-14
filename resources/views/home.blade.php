@@ -1,12 +1,14 @@
 @extends('layouts.app')
+
 @section('content')
     {!! Form::open(['url' => 'mostrar', 'method' => 'GET', 'class' => 'navbar-form navbar-left', 'role' => 'search']) !!}
         <div class="form-group">
-            {!! Form::text('name', null ,['id'=> 'libro', 'class' => 'form-control' , 'placeholder' => 'Libro', 'autocomplete' => 'off']) !!}
-            <div id="busqueda" hidden="true" style="background-color: #9d9d9d"></div>
+            <label>Buscar: </label>
+            {!! Form::text('libro', '' ,['id'=> 'libro', 'class' => 'form-control' , 'placeholder' => 'Libro', 'autocomplete' => 'off']) !!}
+            <div id="busqueda" class="autocomplete" >
+            </div>
         </div>
-        <button type="submit" class="btn btn-default">Buscar</button>
-    {!! Form::close() !!}
+
     <!-- Jumbotron Header -->
     <header class="jumbotron hero-spacer">
         <h1>Bienvenido</h1>
@@ -43,46 +45,41 @@
         @endforeach
     </div>
     <script>
-
+        var url_Base = "{{  route('buscar') }}";
+        var url_mostrar = "/libreria/public/mostrar/";
         $(document).ready(function(){
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 }
             });
 
-
             var busqueda;
-            var url_Base = '{{  route('buscar') }}';
             $("#libro").focus();
             $("#libro").keyup(function(){
-                $("#busqueda").attr("hidden",false);
-                //$("#busqueda").html("<p>asdasd</p>");
-                //obtenemos el texto introducido en el campo de búsqueda
                 busqueda = $("#libro").val();
-                //hace la búsqueda
                 $.ajax({
                     type: "POST",
                     url: url_Base,
-                    data: {
-                        "libro": busqueda
-                    },
-                    dataType: "JSON",
+                    data: 'b='+busqueda,
                     beforeSend: function () {
                         $("#busqueda").html("...");
                     }
                 }).done(function(data) {
-                    debugger;
-                    alert ("succces");
-                    $("#busqueda").val(data);
+                    $("#busqueda").show();
+                    $("#busqueda").html(data);
+                    $("#libro").css("background","#FFF");
                 }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+
                 })
 
             });
 
         });
+        function selectLibro(val) {
+            document.location.href=url_mostrar+val;
+            $("#busqueda").hide();
+        }
     </script>
 @endsection
 

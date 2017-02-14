@@ -19,7 +19,7 @@ class User extends Authenticatable
     ];
 
     public function isAdmin(){
-        return ($this->type === 'admin' || $this->type === 'superadmin');
+        return ($this->tipo === 'admin' || $this->tipo === 'superadmin');
     }
 
     /**
@@ -30,4 +30,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
 }
